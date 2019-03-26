@@ -135,10 +135,49 @@ public:
 	}
 };
 
+class PreferredCustomer : public CustomerData
+{
+private:
+	double purchaseAmount;
+	double discountLevel;
+
+public:
+	PreferredCustomer(double purchase, int num, bool mail, std::string last, std::string first, std::string add, std::string town, std::string sta, int _zip, int _phone) : CustomerData(num, mail, last, first, add, town, sta, _zip, _phone)
+	{
+		purchaseAmount = purchase;
+		discountLevel = 0;
+	}
+
+	double getPurchaseAmount()
+	{
+		return purchaseAmount;
+	}
+
+	double getDiscountLevel()
+	{
+		if (purchaseAmount >= 500)
+			discountLevel = .95;
+		else if (purchaseAmount >= 1000)
+			discountLevel = .94;
+		else if (purchaseAmount >= 1500)
+			discountLevel = .93;
+		else if (purchaseAmount >= 2000)
+			discountLevel = .9;
+		return discountLevel;
+	}
+
+	void setPurchaseAmount(double amount)
+	{
+		purchaseAmount = amount;
+	}
+};
+
 int main()
 {
-	CustomerData me(55209, true, "Chase", "Connor", "33333 Main Street", "Pomona", "California", 55204, 3333333333);
-	printf("Customer Number: %d", me.getCustomerNumber());
+	PreferredCustomer me(750.76, 55209, true, "Chase", "Connor", "33333 Main Street", "Pomona", "California", 55204, 3333333333);
+	printf("Purchase Amount: %f", me.getPurchaseAmount());
+	printf("\nDiscount Level: %f", me.getDiscountLevel());
+	printf("\nCustomer Number: %d", me.getCustomerNumber());
 	printf("\nMailing List: %d", me.getMailingList());
 	printf("\nLast Name: %s", me.getLast().c_str());
 	printf("\nFirst Name: %s", me.getFirst().c_str());
